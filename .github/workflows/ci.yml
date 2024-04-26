@@ -9,6 +9,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   find-changed-workspaces:
     name: Detect workspace changes
@@ -16,6 +19,11 @@ jobs:
     outputs:
       workspaces: ${{ steps.find-changed-workspaces.outputs.workspaces }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+        with:
+          egress-policy: audit
+
       - name: Checkout
         uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f # v4
 
@@ -53,6 +61,11 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=8192
 
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+        with:
+          egress-policy: audit
+
       - name: Checkout main branch for tests purposes
         uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f # v4
         with:
@@ -118,6 +131,11 @@ jobs:
         workspace: ${{ fromJSON(needs.find-changed-workspaces.outputs.workspaces) }}
       fail-fast: false
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+        with:
+          egress-policy: audit
+
       - name: Checkout head branch
         uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f # v4
         with:
@@ -138,6 +156,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ci, verify]
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
+        with:
+          egress-policy: audit
+
       - run: exit 1
         if: >-
           ${{

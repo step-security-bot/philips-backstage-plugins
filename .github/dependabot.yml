@@ -12,3 +12,38 @@ updates:
       backstage:
         patterns:
           - "@backstage/*"          
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /workspaces/repo-tools
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /workspaces/repo-tools/packages/cli
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /workspaces/repo-tools/packages/cli/src/lib/workspaces/templates/workspace
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /workspaces/upptime
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /workspaces/upptime/plugins/upptime-backend
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /workspaces/upptime/plugins/upptime-frontend
+    schedule:
+      interval: daily
